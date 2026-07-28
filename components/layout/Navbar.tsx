@@ -20,6 +20,21 @@ export default function Navbar() {
     };
   }, []);
 
+  // Función para navegar y cerrar el menú
+  const handleNavigation = (id: string) => {
+    setMenuOpen(false);
+
+    setTimeout(() => {
+      const section = document.getElementById(id);
+
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    }, 250);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
@@ -33,23 +48,26 @@ export default function Navbar() {
           GERENCIAR ASOCIADOS
         </h1>
 
-        {/* Links de escritorio: se ocultan en celular */}
+        {/* Menú escritorio */}
         <ul className="hidden md:flex items-center gap-8 text-white">
           <li>
             <a href="#inicio" className="transition hover:text-blue-300">
               Inicio
             </a>
           </li>
+
           <li>
             <a href="#servicios" className="transition hover:text-blue-300">
               Servicios
             </a>
           </li>
+
           <li>
             <a href="#why-us" className="transition hover:text-blue-300">
               ¿Por qué elegirnos?
             </a>
           </li>
+
           <li>
             <a href="#contacto" className="transition hover:text-blue-300">
               Contacto
@@ -57,7 +75,7 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Botón hamburguesa: solo visible en celular */}
+        {/* Botón hamburguesa */}
         <button
           className="md:hidden text-white"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -66,20 +84,47 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Menú desplegable de celular */}
+      {/* Menú móvil */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden flex flex-col gap-4 bg-slate-950/95 backdrop-blur-md px-8 py-6 overflow-hidden"
+            transition={{ duration: 0.3 }}
+            className="md:hidden overflow-hidden bg-slate-950/95 backdrop-blur-md"
           >
-            <a href="#inicio" onClick={() => setMenuOpen(false)}>Inicio</a>
-            <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
-            <a href="#why-us" onClick={() => setMenuOpen(false)}>¿Por qué elegirnos?</a>
-            <a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a>
+            <div className="flex flex-col gap-6 px-8 py-6 text-white font-medium">
+
+              <button
+                onClick={() => handleNavigation("inicio")}
+                className="text-left transition hover:text-blue-300"
+              >
+                Inicio
+              </button>
+
+              <button
+                onClick={() => handleNavigation("servicios")}
+                className="text-left transition hover:text-blue-300"
+              >
+                Servicios
+              </button>
+
+              <button
+                onClick={() => handleNavigation("why-us")}
+                className="text-left transition hover:text-blue-300"
+              >
+                ¿Por qué elegirnos?
+              </button>
+
+              <button
+                onClick={() => handleNavigation("contacto")}
+                className="text-left transition hover:text-blue-300"
+              >
+                Contacto
+              </button>
+
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
