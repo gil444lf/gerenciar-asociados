@@ -1,0 +1,96 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactSchema, ContactFormData } from "@/lib/schemas/contactSchema";
+
+export default function ContactForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    console.log("Datos válidos:", data);
+    // Aquí después conectamos el envío real (email, API, etc.)
+    reset();
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div>
+        <input
+          {...register("nombre")}
+          placeholder="Nombre completo"
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400"
+        />
+        {errors.nombre && (
+          <p className="mt-1 text-sm text-red-600">{errors.nombre.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          {...register("email")}
+          placeholder="Correo electrónico"
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400"
+        />
+        {errors.email && (
+          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          {...register("telefono")}
+          placeholder="Teléfono"
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400"
+        />
+        {errors.telefono && (
+          <p className="mt-1 text-sm text-red-600">{errors.telefono.message}</p>
+        )}
+      </div>
+
+      <div>
+        <select
+          {...register("servicio")}
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400"
+        >
+          <option value="">¿Qué servicio necesitas?</option>
+          <option value="gestion-financiera">Gestión Financiera</option>
+          <option value="contabilidad">Contabilidad</option>
+          <option value="tributaria">Asesoría Tributaria</option>
+          <option value="auditoria">Auditoría</option>
+          <option value="revisoria">Revisoría Fiscal</option>
+        </select>
+        {errors.servicio && (
+          <p className="mt-1 text-sm text-red-600">{errors.servicio.message}</p>
+        )}
+      </div>
+
+      <div>
+        <textarea
+          {...register("mensaje")}
+          placeholder="Cuéntanos qué necesitas"
+          rows={5}
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-400"
+        />
+        {errors.mensaje && (
+          <p className="mt-1 text-sm text-red-600">{errors.mensaje.message}</p>
+        )}
+      </div>
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full rounded-lg bg-blue-950 py-4 font-semibold text-white transition hover:bg-blue-900 disabled:opacity-50"
+      >
+        {isSubmitting ? "Enviando..." : "Enviar mensaje"}
+      </button>
+    </form>
+  );
+}
