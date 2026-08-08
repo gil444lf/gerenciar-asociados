@@ -27,14 +27,13 @@ model Cita {
   fecha     DateTime
   mensaje   String?
   estado    String   @default("Pendiente")
-
   createdAt DateTime @default(now())
 }
 
 model Cliente {
   id        Int      @id @default(autoincrement())
   nombre    String
-  email     String   @unique
+  email     String
   telefono  String
   empresa   String?
   estado    String   @default("Activo")
