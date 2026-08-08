@@ -15,9 +15,21 @@ export default function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    console.log("Datos válidos:", data);
-    // Aquí después conectamos el envío real (email, API, etc.)
-    reset();
+    try {
+      const res = await fetch("/api/solicitudes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Error al enviar");
+
+      reset();
+      alert("¡Mensaje enviado con éxito!");
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un problema al enviar el formulario.");
+    }
   };
 
   return (

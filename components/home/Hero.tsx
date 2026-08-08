@@ -46,6 +46,8 @@ export default function Hero() {
         </h1>
 
         <p className="mx-auto mb-10 max-w-3xl text-lg leading-8 text-gray-300 sm:text-xl sm:leading-9">
+          Asesoría en pensiones,
+          Asesoria laboral,
           Soluciones integrales en Gestión Financiera,
           Contabilidad, Asesoría Tributaria,
           Auditoría y Revisoría Fiscal para
