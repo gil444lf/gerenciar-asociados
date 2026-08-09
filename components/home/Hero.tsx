@@ -3,7 +3,7 @@ import Counter from "@/components/ui/Counter";
 
 const estadisticas = [
   {
-    numero: 15,
+    numero: 30,
     prefijo: "+",
     sufijo: "",
     texto: "Años de experiencia",
