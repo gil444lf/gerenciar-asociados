@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     });
 
     const respuesta = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-20b",
       temperature: 0.4,
       max_tokens: 500,
       messages: [
