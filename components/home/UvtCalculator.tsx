@@ -4,9 +4,14 @@ import { useState } from "react";
 
 const VALOR_UVT_2026 = 52374;
 
+const soloDigitos = (v: string) => v.replace(/\D/g, "");
+
+const formatoInput = (v: string) =>
+  v === "" ? "" : "$ " + new Intl.NumberFormat("es-CO").format(Number(v));
+
 export default function UvtCalculator() {
   const [uvt, setUvt] = useState("");
-  const [pesos, setPesos] = useState("");
+  const [pesos, setPesos] = useState(""); // solo dígitos
 
   const handleUvtChange = (valor: string) => {
     setUvt(valor);
@@ -20,20 +25,15 @@ export default function UvtCalculator() {
   };
 
   const handlePesosChange = (valor: string) => {
-    setPesos(valor);
+    const digitos = soloDigitos(valor);
+    setPesos(digitos);
 
-    const numero = parseFloat(valor);
-    if (!isNaN(numero)) {
+    const numero = Number(digitos);
+    if (digitos !== "" && !isNaN(numero)) {
       setUvt((numero / VALOR_UVT_2026).toFixed(2));
     } else {
       setUvt("");
     }
-  };
-
-  const formatearPesos = (valor: string) => {
-    const numero = parseFloat(valor);
-    if (isNaN(numero)) return "";
-    return numero.toLocaleString("es-CO");
   };
 
   return (
@@ -51,6 +51,7 @@ export default function UvtCalculator() {
         </label>
         <input
           type="number"
+          step="any"
           value={uvt}
           onChange={(e) => handleUvtChange(e.target.value)}
           placeholder="Ej: 10"
@@ -67,17 +68,13 @@ export default function UvtCalculator() {
           Pesos colombianos (COP)
         </label>
         <input
-          type="number"
-          value={pesos}
+          type="text"
+          inputMode="numeric"
+          value={formatoInput(pesos)}
           onChange={(e) => handlePesosChange(e.target.value)}
-          placeholder="Ej: 523740"
+          placeholder="$ 523.740"
           className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900"
         />
-        {pesos && (
-          <p className="mt-2 text-sm text-slate-500">
-            ${formatearPesos(pesos)} COP
-          </p>
-        )}
       </div>
     </div>
   );

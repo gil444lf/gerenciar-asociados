@@ -116,7 +116,7 @@ export default function Footer() {
 
           <p className="text-sm text-slate-500">
             © {anioActual} Gerenciar Asociados. Todos los derechos reservados.
-            Software desarrollado por{"Juan José Gil Gutiérrez"}. 
+            Software desarrollado por{" Juan José Gil Gutiérrez"}. 
             numero de contacto: +57 314 250 1857.
           </p>
 
